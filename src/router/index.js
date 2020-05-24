@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { entryToRoutePath } from '../../build/entryRoutesConf'
 
 Vue.use(Router)
 
@@ -17,34 +18,13 @@ const AdminView = () =>
 const AdminList = () =>
     import ('../views/AdminList.vue')
 const HomePage = () =>
-    import ('../pages/index/App.vue')
+    import ('../pages/home/App.vue')
 const AdminPage = () =>
     import ('../pages/admin/App.vue')
-const entryRoutesConf = [{
-        entry: "index",
-        routePath: "/home",
-        component: HomePage,
-        children: [{
-            path: '/',
-            component: HomeView
-        }]
-    },
-    {
-        entry: "admin",
-        routePath: "/admin",
-        component: AdminPage,
-        children: [{
-            path: '/',
-            component: AdminView
-        }, {
-            path: "/list",
-            component: AdminList
-        }]
-    },
-]
+
 
 export function createRouter(url) {
-    const isAdmin = url.indexOf('admin') !== -1
+    // const isAdmin = url.indexOf('admin') !== -1
 
     return new Router({
         mode: 'history',
@@ -65,20 +45,28 @@ export function createRouter(url) {
         //     { path: '/admin', component: AdminView }
         // ]
         routes: [
-            { path: '/', redirect: '/home' }
-        ].concat(entryRoutesConf.map(item => ({
-            path: item.routePath,
-            component: item.component,
-            children: item.children,
-        })))
+            { path: '/', redirect: '/home' },
+            {
+                // path: entryToRoutePath("home"),
+                path: '/home',
+                component: HomePage,
+                children: [{
+                    path: '/',
+                    component: HomeView
+                }]
+            },
+            {
+                // path: entryToRoutePath("admin"),
+                path: '/admin',
+                component: AdminPage,
+                children: [{
+                    path: '/',
+                    component: AdminView
+                }, {
+                    path: "/list",
+                    component: AdminList
+                }]
+            }
+        ]
     })
-}
-
-export function urlToEntryName(url) {
-    if (typeof url !== "string") return entryRoutesConf[0].entry
-
-    entryRoutesConf.forEach(item => {
-        if (url.indexOf(item.routePath) === 0) return item.entry
-    })
-    return entryRoutesConf[0].entry
 }
