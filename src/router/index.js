@@ -20,6 +20,28 @@ const HomePage = () =>
     import ('../pages/index/App.vue')
 const AdminPage = () =>
     import ('../pages/admin/App.vue')
+const entryRoutesConf = [{
+        entry: "index",
+        routePath: "/home",
+        component: HomePage,
+        children: [{
+            path: '/',
+            component: HomeView
+        }]
+    },
+    {
+        entry: "admin",
+        routePath: "/admin",
+        component: AdminPage,
+        children: [{
+            path: '/',
+            component: AdminView
+        }, {
+            path: "/list",
+            component: AdminList
+        }]
+    },
+]
 
 export function createRouter(url) {
     const isAdmin = url.indexOf('admin') !== -1
@@ -43,27 +65,20 @@ export function createRouter(url) {
         //     { path: '/admin', component: AdminView }
         // ]
         routes: [
-            // { path: '/', redirect: '/home' },
-            {
-                path: '/home',
-                component: HomePage,
-                children: [{
-                    path: '/',
-                    component: HomeView
-                }]
-            },
-            {
-                path: '/admin',
-                component: AdminPage,
-                children: [{
-                    path: '/',
-                    component: AdminView
-                }, {
-                    path: "/",
-                    component: AdminList
-                }]
-            },
-
-        ]
+            { path: '/', redirect: '/home' }
+        ].concat(entryRoutesConf.map(item => ({
+            path: item.routePath,
+            component: item.component,
+            children: item.children,
+        })))
     })
+}
+
+export function urlToEntryName(url) {
+    if (typeof url !== "string") return entryRoutesConf[0].entry
+
+    entryRoutesConf.forEach(item => {
+        if (url.indexOf(item.routePath) === 0) return item.entry
+    })
+    return entryRoutesConf[0].entry
 }

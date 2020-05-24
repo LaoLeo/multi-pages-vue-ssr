@@ -7,6 +7,7 @@ const compression = require('compression')
 const microcache = require('route-cache')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('lib/vue-server-renderer')
+const { urlToEntryName } = require('src/router')
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
@@ -99,7 +100,8 @@ function render(req, res) {
 
     const context = {
         title: 'Vue HN 2.0', // default title
-        url: req.url
+        url: req.url,
+        entryName: urlToEntryName(req.url)
     }
     renderer.renderToString(context, (err, html) => {
         if (err) {
