@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h1 class="title">Home vue ssr</h1>
+        <h1 class="title">Home view</h1>
+        <ul>
+            <li><a href="/admin">admin page</a></li>
+        </ul>
     </div>
 </template>
 

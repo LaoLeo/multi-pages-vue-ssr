@@ -1,6 +1,9 @@
 <template>
     <div class="admin">
-        Admin page
+        Admin view
+        <ul>
+            <li><a href="/home">home page</a></li>
+        </ul>
     </div>
 </template>
 
