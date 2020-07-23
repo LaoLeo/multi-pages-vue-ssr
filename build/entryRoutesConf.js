@@ -11,10 +11,12 @@ var entryRoutesConf = [{
 function urlToEntryName(url) {
     if (typeof url !== "string") return entryRoutesConf[0].entry
 
-    entryRoutesConf.forEach(item => {
-        if (url.indexOf(item.routePath) === 0) return item.entry
+    const target = entryRoutesConf.filter(item => {
+        if (url.indexOf(item.routePath) === 0) return true
     })
-    return entryRoutesConf[0].entry
+    const entryName = target[0] ? target[0].entry : entryRoutesConf[0].entry
+        // console.log(url, "=>", entryName)
+    return entryName
 }
 
 function entryToRoutePath(entry) {
