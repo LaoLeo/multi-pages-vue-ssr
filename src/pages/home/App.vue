@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1>Home page</h1>
+         <!-- data-pageid="home-page" -->
         <router-view></router-view>
     </div>
 </template>

@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <h1>xxxxx Admin page</h1>
+        <!-- data-pageid="admin page" -->
         <router-view></router-view>
+
     </div>
 </template>
