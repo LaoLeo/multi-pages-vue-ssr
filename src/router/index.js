@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { entryToRoutePath } from '../../build/entryRoutesConf'
 
 Vue.use(Router)
 
@@ -23,31 +22,16 @@ const AdminPage = () =>
     import ('../pages/admin/App.vue')
 
 
-export function createRouter(url) {
+export function createRouter() {
     // const isAdmin = url.indexOf('admin') !== -1
 
     return new Router({
         mode: 'history',
         fallback: false,
         scrollBehavior: () => ({ y: 0 }),
-        // routes: !isAdmin ? [
-        //     // { path: '/top/:page(\\d+)?', component: createListView('top') },
-        //     // { path: '/new/:page(\\d+)?', component: createListView('new') },
-        //     // { path: '/show/:page(\\d+)?', component: createListView('show') },
-        //     // { path: '/ask/:page(\\d+)?', component: createListView('ask') },
-        //     // { path: '/job/:page(\\d+)?', component: createListView('job') },
-        //     // { path: '/item/:id(\\d+)', component: ItemView },
-        //     // { path: '/user/:id', component: UserView },
-        //     // { path: '/', redirect: '/top' }
-        //     { path: '/home', component: HomeView },
-        //     { path: '/', redirect: '/home' }
-        // ] : [
-        //     { path: '/admin', component: AdminView }
-        // ]
         routes: [
             { path: '/', redirect: '/home' },
             {
-                // path: entryToRoutePath("home"),
                 path: '/home',
                 component: HomePage,
                 children: [{
@@ -56,7 +40,6 @@ export function createRouter(url) {
                 }]
             },
             {
-                // path: entryToRoutePath("admin"),
                 path: '/admin',
                 component: AdminPage,
                 children: [{

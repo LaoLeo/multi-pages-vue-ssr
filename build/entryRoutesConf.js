@@ -19,12 +19,5 @@ function urlToEntryName(url) {
     return entryName
 }
 
-function entryToRoutePath(entry) {
-    var ret = entryRoutesConf.filter(item => item.entry == entry)
-    if (ret === undefined) throw new Error("entry config not found, entry:'" + entry + "'")
-    console.log(entry, ret.routePath)
-    return ret.routePath
-}
 
 exports.urlToEntryName = urlToEntryName
-exports.entryToRoutePath = entryToRoutePath
