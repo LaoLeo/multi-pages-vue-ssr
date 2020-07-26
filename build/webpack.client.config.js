@@ -8,9 +8,6 @@ const path = require('path')
 const utils = require('./utils')
 
 const config = merge(base, {
-    // entry: {
-    //   app: './src/entry-client.js'
-    // },
     entry: utils.entries(),
     resolve: {
         alias: {
@@ -75,15 +72,4 @@ if (process.env.NODE_ENV === 'production') {
     )
 }
 
-// module.exports = function (entry) {
-
-//   return merge(config, {
-//     entry,
-//     output: {
-//       path: path.resolve(__dirname, '../dist/[name]'),
-//       publicPath: '/dist/[name]'
-//     }
-
-//   })
-// }
 module.exports = config

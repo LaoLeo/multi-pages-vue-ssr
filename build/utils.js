@@ -1,9 +1,10 @@
 const glob = require('glob')
 const path = require('path')
+const { pagesPath, entryRoutesConf } = require('./config')
 
-const PAGE_PATH = path.resolve(__dirname, '../src/pages')
+const PAGE_PATH = path.resolve(__dirname, '..', pagesPath)
 
-const entries = function(isServer) {
+const entries = (isServer) => {
     let regx = isServer ? /entry-server/ : /entry-client/
 
     var entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
@@ -16,11 +17,22 @@ const entries = function(isServer) {
             }
 
         })
-        // map['common-api'] = path.resolve(__dirname,
-        //   '../src/common/index.js'
-        // )
-    console.log(map)
+        // console.log(map)
     return map
 }
 
+
+const urlToEntryName = (url) => {
+    if (typeof url !== "string") return entryRoutesConf[0].entry
+
+    const target = entryRoutesConf.filter(item => {
+        if (url.indexOf(item.routePath) === 0) return true
+    })
+    const entryName = target[0] ? target[0].entry : entryRoutesConf[0].entry
+        // console.log(url, "=>", entryName)
+    return entryName
+}
+
+
+exports.urlToEntryName = urlToEntryName
 exports.entries = entries

@@ -9,10 +9,8 @@ const utils = require('./utils')
 module.exports = merge(base, {
     target: 'node',
     devtool: '#source-map',
-    // entry: './src/entry-server.js',
     entry: utils.entries(true),
     output: {
-        filename: '[name]-server-bundle.js',
         libraryTarget: 'commonjs2'
     },
     resolve: {

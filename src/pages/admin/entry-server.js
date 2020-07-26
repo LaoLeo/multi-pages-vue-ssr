@@ -1,4 +1,4 @@
-import { createApp } from './admin'
+import { createApp } from './index'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
