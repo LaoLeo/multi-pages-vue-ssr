@@ -1,52 +1,60 @@
-# vue-hackernews-2.0
+# multi-pages-vue-ssr
 
-HackerNews clone built with Vue 2.0 + vue-router + vuex, with server-side rendering.
+基于vue-server-renderer插件改造成为支持可配置多入口的vueSSR多页应用demo
 
-<p align="center">
-  <a href="https://vue-hn.herokuapp.com" target="_blank">
-    <img src="https://cloud.githubusercontent.com/assets/499550/17546273/5aabc5fc-5eaf-11e6-8d6a-ad00937e8bd6.png" width="700px">
-    <br>
-    Live Demo
-  </a>
-</p>
+## 功能
 
-## Features
+假如你的应用中包含了项目首页（A）和后台系统（B）两种相关性不强的页面，由于vue-server-renderer不能配置多入口的限制（配置多多入口打包server bundle会报错），那么渲染出来的html中的资源文件会是AB两种页面所需资源的混合，可能A页面加载了只有B页面才用到的资源，这正是这个项目需要解决的问题。
 
-> Note: in practice, it is unnecessary to code-split for an app of this size (where each async chunk is only a few kilobytes), nor is it optimal to extract an extra CSS file (which is only 1kb) -- they are used simply because this is a demo app showcasing all the supported features.
+在vue-server-renderer原有能力上做了扩展以下的几点能力：
 
-- Server Side Rendering
-  - Vue + vue-router + vuex working together
-  - Server-side data pre-fetching
-  - Client-side state & DOM hydration
-  - Automatically inlines CSS used by rendered components only
-  - Preload / prefetch resource hints
-  - Route-level code splitting
-- Progressive Web App
-  - App manifest
-  - Service worker
-  - 100/100 Lighthouse score
-- Single-file Vue Components
-  - Hot-reload in development
-  - CSS extraction for production
-- Animation
-  - Effects when switching route views
-  - Real-time list updates with FLIP Animation
+- 支持配置多页应用的多个入口
+- 多入口按需加载资源，A页面不会引入B页面才用到资源文件
+- dev环境下（热重载）也支持多入口
 
-## A Note on Performance
 
-This is a demo primarily aimed at explaining how to build a server-side rendered Vue app, as a companion to our SSR documentation. There are a few things we probably won't do in production if we were optimizing for performance, for example:
-
-- This demo uses the Firebase-based HN API to showcase real-time updates, but the Firebase API also comes with a larger bundle, more JavaScript to parse on the client, and doesn't offer an efficient way to batch-fetch pages of items, so it impacts performance quite a bit on a cold start or cache miss.
-
-- In practice, it is unnecessary to code-split for an app of this size (where each async chunk is only a few kilobytes so the extra request isn't really worth it), nor is it optimal to extract an extra CSS file (which is only 1kb).
-
-It is therefore not recommended to use this app as a reference for Vue SSR performance - instead, do your own benchmarking, and make sure to measure and optimize based on your actual app constraints.
-
-## Architecture Overview
+## 结构预览
 
 <img width="973" alt="screen shot 2016-08-11 at 6 06 57 pm" src="https://cloud.githubusercontent.com/assets/499550/17607895/786a415a-5fee-11e6-9c11-45a2cfdf085c.png">
 
-**A detailed Vue SSR guide can be found [here](https://ssr.vuejs.org).**
+
+## 多入口配置和目录结构
+```js
+// config.js
+{
+  pagePath: 'src/pages' // 多入口目录配置
+}
+
+// src/pages目录结构
+- src
+  - pages
+    - admin
+      - App.vue
+      - entry-client.js
+      - entry-server.js
+      - index.js
+    - home
+      - App.vue
+      - entry-client.js
+      - entry-server.js
+      - index.js
+
+// 路由跟入口文件的对应关系
+// 通过不同的路由走不同的入口，比如：/home/**/**的路由会走home入口
+// config.js
+{
+  entryRoutesConf: [{
+      entry: "home",
+      routePath: "/home"
+    },
+    {
+      entry: "admin",
+      routePath: "/admin"
+    },
+  ]
+}
+
+```
 
 ## Build Setup
 
@@ -65,7 +73,3 @@ npm run build
 # serve in production mode
 npm start
 ```
-
-## License
-
-MIT
