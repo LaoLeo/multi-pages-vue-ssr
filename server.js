@@ -6,14 +6,14 @@ const favicon = require('serve-favicon')
 const compression = require('compression')
 const microcache = require('route-cache')
 const resolve = file => path.resolve(__dirname, file)
-const { createBundleRenderer } = require('./lib/vue-server-renderer/index')
+const { createBundleRenderer } = require('vue-server-renderer-multi')
 const { urlToEntryName } = require('./build/utils')
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
 const serverInfo =
     `express/${require('express/package.json').version} ` +
-    `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
+    `vue-server-renderer-multi/${require('vue-server-renderer-multi/package.json').version}`
 
 const app = express()
 

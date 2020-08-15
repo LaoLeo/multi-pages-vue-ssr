@@ -1,5 +1,5 @@
 module.exports = {
-    pagePath: 'src/pages',
+    pagesPath: 'src/pages',
     entryRoutesConf: [{
             entry: "home",
             routePath: "/home"

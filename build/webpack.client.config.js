@@ -2,8 +2,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const base = require('./webpack.base.config')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
-const VueSSRClientPlugin = require('../lib/vue-server-renderer/client-plugin')
-const path = require('path')
+const VueSSRClientPlugin = require('vue-server-renderer-multi/client-plugin')
 
 const utils = require('./utils')
 

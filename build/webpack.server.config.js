@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const base = require('./webpack.base.config')
 const nodeExternals = require('webpack-node-externals')
-const VueSSRServerPlugin = require('../lib/vue-server-renderer/server-plugin')
+const VueSSRServerPlugin = require('vue-server-renderer-multi/server-plugin')
 
 const utils = require('./utils')
 
