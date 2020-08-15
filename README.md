@@ -25,7 +25,7 @@
  * /
 // config.js
 {
-  pagePath: 'src/pages' // 多入口目录配置
+  pagesPath: 'src/pages', // 多入口目录配置,
 }
 
 // src/pages目录结构
